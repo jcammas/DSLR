@@ -41,31 +41,31 @@ def l2(theta):
     return res.T.dot(res)
 
 
-def reg_log_loss_(y, Hufflepuffat, theta, lambda_, eps=1e-15):
+def reg_log_loss_(y, y_hat, theta, lambda_, eps=1e-15):
     """Computes the regularized loss of a logistic regression model from two non-empty numpy.array,
     without any for loop. The two arrays must have the same shapes.
     Args:
     y: has to be an numpy.array, a vector of shape m * 1.
-    Hufflepuffat: has to be an numpy.array, a vector of shape m * 1.
+    y_hat: has to be an numpy.array, a vector of shape m * 1.
     theta: has to be a numpy.array, a vector of shape n * 1.
     lambda_: has to be a float.
     eps: has to be a float, epsilon (default=1e-15).
     Return:
     The regularized loss as a float.
-    None if y, Hufflepuffat, or theta is empty numpy.array.
-    None if y or Hufflepuffat have component ouside [0 ; 1]
-    None if y and Hufflepuffat do not share the same shapes.
-    None if y or Hufflepuffat is not of the expected type.
+    None if y, y_hat, or theta is empty numpy.array.
+    None if y or y_hat have component ouside [0 ; 1]
+    None if y and y_hat do not share the same shapes.
+    None if y or y_hat is not of the expected type.
     Raises:
     This function should not raise any exception."""
     # J(θ) = −1/m[y · log(ˆy) + (~1 − y) · log(~1 − yˆ)] + λ/2m(θ0· θ0)
-    if y.shape != Hufflepuffat.shape:
+    if y.shape != y_hat.shape:
         return None
     eps: float = 1e-15
     ones = np.ones(y.shape)
     m = y.shape[0]
-    res = np.sum(y * np.log(Hufflepuffat + eps) + (ones - y)
-                 * np.log(ones - Hufflepuffat + eps)) / -m
+    res = np.sum(y * np.log(y_hat + eps) + (ones - y)
+                 * np.log(ones - y_hat + eps)) / -m
     res += (lambda_ * l2(theta)) / (2 * m)
     return res
 

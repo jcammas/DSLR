@@ -15,8 +15,8 @@ def pair_plot():
     parser.add_argument("dataset", type=str, help="input dataset")
     options = parser.parse_args()
     dataset = pd.read_csv(options.dataset)
-    dataset = dataset.drop('Astronomy', axis='columns')
-    dataset = dataset.drop('Defense Against the Dark Arts', axis='columns')
+    # dataset = dataset.drop('Astronomy', axis='columns')
+    # dataset = dataset.drop('Defense Against the Dark Arts', axis='columns')
 
     # on configure notre affichage
     sns.pairplot(dataset, hue='Hogwarts House', markers="+")

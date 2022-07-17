@@ -13,9 +13,9 @@ def add_intercept(x: np.ndarray, axis: int = 1) -> np.ndarray:
 
 def StandardScaler(X):
     """
-    StandardScaler performs the task of Standardization. 
-    Our dataset contains variable values that are different in scale. 
-    As these two columns are different in scale, they are Standardized 
+    StandardScaler performs the task of Standardization.
+    Our dataset contains variable values that are different in scale.
+    As these two columns are different in scale, they are Standardized
     to have a common scale while building a machine learning model.
     """
     mean = np.mean(X, axis=0)
@@ -68,23 +68,37 @@ if __name__ == "__main__":
     X = np.array(dataset)
     X = StandardScaler(X)
     X = add_intercept(X, axis=1)
+
+    # ici on récupère les valeurs de nos thetas grâce au csv créé via train
     thetas = pd.read_csv("thetas.csv")
+
+    # on initialise ces derniers
     theta_Gryffindor = thetas['Gryffindor']
     theta_Slytherin = thetas['Slytherin']
     theta_Ravenclaw = thetas['Ravenclaw']
     theta_Hufflepuff = thetas['Hufflepuff']
 
+    # on commence notre pred
     prediction = []
+
+    # On fait la prediction au cas par cas
     pred_Gryffindor = predict(X, theta_Gryffindor)
     pred_Slytherin = predict(X, theta_Slytherin)
     pred_Ravenclaw = predict(X, theta_Ravenclaw)
     pred_Hufflepuff = predict(X, theta_Hufflepuff)
+
+    # on agit en fonction de nos résultats (on vient chercher les notes, on fait un diff et on assigne en fonction de ça)
     for i in range(len(pred_Gryffindor)):
         grade = 0
         house = 0
         if pred_Gryffindor[i] > pred_Slytherin[i]:
+
+            print("pred gryff :", pred_Gryffindor[i])
+            print("pred slyth :", pred_Slytherin[i])
+
             grade = pred_Gryffindor[i]
             house = 'Gryffindor'
+
         else:
             grade = pred_Slytherin[i]
             house = 'Slytherin'
@@ -94,7 +108,10 @@ if __name__ == "__main__":
         if pred_Hufflepuff[i] > grade:
             grade = pred_Hufflepuff[i]
             house = 'Hufflepuff'
+
         prediction.append(house)
+
+    # on paramètre notre houses.csv qui affichera les maisons données aux moldus, ou aux pas moldus je sais plus ?
     prediction = np.array(prediction)
     prediction = pd.DataFrame(prediction, columns=['Hogwarts House'])
     prediction = prediction.rename_axis('Index', axis=0)

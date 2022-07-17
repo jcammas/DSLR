@@ -45,4 +45,4 @@ if __name__ == "__main__":
 #######
 
 # Q:    Quel cours de Poudlard a une répartition des notes homogènes entre les quatres maisons ?
-# A:    Care of Magical Creatures
+# A:    Care of Magical Creatures et/ou Arithmancy / un peu potion aussi
